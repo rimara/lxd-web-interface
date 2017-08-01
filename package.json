@@ -1,0 +1,5 @@
+{
+  "name": "lxd-web-interface",
+  "private": true,
+  "dependencies": {}
+}
