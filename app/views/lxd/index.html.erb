@@ -1,0 +1,78 @@
+<div id="title" class="u-max-full-width">
+    <h3 class="title-header">
+        <%= image_tag("logo.png", :alt => "Logo", :class => "logo") -%>
+        <strong>LXWeb</strong>
+    </h3>
+    <span class="subtitle-header">Web Interface for LXD Containers</span>
+</div>
+
+<div class="container u-max-full-width">
+    <div class="row main-header">
+        <div class="nine columns">
+            <form class="machine">
+                <label class="machineLabel" for="machineChoice">Machine</label>
+                <select class="chooseMachine">
+                    <option value="machine1">Master</option>
+                    <option value="machine2">Node-1</option>
+                    <option value="machine3">Node-2</option>
+                </select>
+            </form>
+        </div>
+        <div class="three columns">
+            <a class="add-container-link" href="#">
+                <button class="add-new-button button-primary">Add Container</button>
+            </a>
+        </div>
+    </div>
+
+    <% @containers.each do |container| %>
+      <p><%= container%></p>
+    <% end %>
+    <div class="scrollable-table u-max-full-width">
+        <table class="u-full-width">
+            <thead class="u-full-width">
+                <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>IPv4</th>
+                    <th>IPv6</th>
+                    <th>Type</th>
+                    <th>Snapshots</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="u-full-width">
+                <tr>
+                    <td><a class="container-link" href="#">myContainer1</a></td>
+                    <td>Running</td>
+                    <td>152.118.24.10</td>
+                    <td>-</td>
+                    <td>Persistent</td>
+                    <td>0</td>
+                    <td><%= image_tag("edit.png", :alt => "Edit", :class => "icons") -%>
+                        <%= image_tag("delete.png", :alt => "Delete", :class => "icons") -%></td>
+                </tr>
+            </tbody>
+            <tbody class="u-full-width">
+                <tr>
+                    <td><a class="container-link" href="#">myContainer2</a></td>
+                    <td>Running</td>
+                    <td>152.118.24.12</td>
+                    <td>-</td>
+                    <td>Persistent</td>
+                    <td>0</td>
+                    <td><%= image_tag("edit.png", :alt => "Edit", :class => "icons") -%>
+                        <%= image_tag("delete.png", :alt => "Delete", :class => "icons") -%></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><%= @containers %></p>
+
+    </div>
+</div>
+
+
+
+
+

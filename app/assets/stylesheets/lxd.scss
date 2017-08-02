@@ -1,0 +1,102 @@
+// Place all the styles related to the lxd controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+//
+
+#title {
+    width: 100%;
+    padding: 2%;
+    border-bottom: solid 2px #e1e1e1;
+}
+
+.title-header {
+    display: inline-block;
+}
+
+.subtitle-header {
+    margin-left: 15px;
+}
+
+.main-header {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.chooseMachine {
+    display: inline-block;
+    margin-left: 15px;
+    width: 25%;
+}
+
+.machineLabel {
+    display: inline-block;
+}
+
+.machine {
+    margin-bottom: 0;
+}
+
+.system-info {
+    background-color: white;
+    width: 100%;
+    display: block;
+}
+
+.add-new-button {
+    display: block;
+    margin: auto;
+}
+
+.add-container-link {
+    text-decoration: none;
+}
+
+.logo {
+    width: 50px;
+}
+
+.container-link {
+    text-decoration: none;
+}
+
+.pic {
+    width: 90%;
+    background-color: gainsboro;
+    border-radius: 100%;
+    display: block;
+    margin: auto;
+}
+
+.info {
+    line-height: 200%;
+    margin-top: 20px;
+}
+
+.icons {
+    width: 15%;
+    margin-right: 15%;
+}
+
+.scrollable-table {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.scrollable-table table {
+    overflow-y: scroll;
+}
+
+.scrollable-table tbody {
+    overflow-x: scroll;
+    display: block;
+}
+
+.scrollable-table thead {
+    display: table-row;
+}
+
+.scrollable-table th, td {
+    min-width: 120px;
+}
+
+
