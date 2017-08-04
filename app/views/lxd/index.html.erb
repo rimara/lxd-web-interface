@@ -24,51 +24,30 @@
             </a>
         </div>
     </div>
-
-    <% @containers.each do |container| %>
-      <p><%= container%></p>
-    <% end %>
-    <div class="scrollable-table u-max-full-width">
-        <table class="u-full-width">
-            <thead class="u-full-width">
-                <tr>
+       <div class="scrollable-table u-max-full-width">
+            <table class="u-full-width">
+                <thead class="u-full-width">
+                    <tr>
                     <th>Name</th>
                     <th>State</th>
                     <th>IPv4</th>
                     <th>IPv6</th>
-                    <th>Type</th>
-                    <th>Snapshots</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody class="u-full-width">
+                 <% @details.each do |name, detail|  %>
                 <tr>
-                    <td><a class="container-link" href="#">myContainer1</a></td>
-                    <td>Running</td>
-                    <td>152.118.24.10</td>
-                    <td>-</td>
-                    <td>Persistent</td>
-                    <td>0</td>
+                    <td><a class="container-link" href="#"><%= name %></a></td>
+                    <td><%= detail[:status]  %></td>
+                    <td><%= @states[name][:network][:eth0][:addresses][0][:address] %>
+                    <td><%= @states[name][:network][:eth0][:addresses][1][:address] %>
                     <td><%= image_tag("edit.png", :alt => "Edit", :class => "icons") -%>
                         <%= image_tag("delete.png", :alt => "Delete", :class => "icons") -%></td>
-                </tr>
+                    </tr>
+                    <% end %>
             </tbody>
-            <tbody class="u-full-width">
-                <tr>
-                    <td><a class="container-link" href="#">myContainer2</a></td>
-                    <td>Running</td>
-                    <td>152.118.24.12</td>
-                    <td>-</td>
-                    <td>Persistent</td>
-                    <td>0</td>
-                    <td><%= image_tag("edit.png", :alt => "Edit", :class => "icons") -%>
-                        <%= image_tag("delete.png", :alt => "Delete", :class => "icons") -%></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p><%= @containers %></p>
-
+         </table>
     </div>
 </div>
 
