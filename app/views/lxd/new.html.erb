@@ -1,0 +1,21 @@
+<div id="title" class="u-max-full-width">
+    <h3 class="title-header">
+        <%= image_tag("logo.png", :alt => "Logo", :class => "logo") -%>
+        <strong>LXWeb</strong>
+    </h3>
+    <span class="subtitle-header">Web Interface for LXD Containers</span>
+</div>
+
+<div class="container u-max-full-width">
+    <div class="row">
+        <div class="six columns">
+            <%= form_tag(lxd_create_path(), method: "post", class:"u-full-width") do %>
+                <%= label_tag("Container name:") %>
+                <%= text_field_tag(:name) %>
+                <%= label_tag("Container alias:") %>
+                <%= select_tag(:image_alias, options_for_select(@image_aliases)) %>
+                <%= submit_tag("Create") %>
+            <% end %>
+          </div>
+      </div>
+</div>

@@ -4,7 +4,13 @@ class LxdController < ApplicationController
         Hyperkit.configure do |c|
             c.client_cert = "#{Rails.root}/client.crt"
             c.client_key = "#{Rails.root}/client.key"
-            c.api_endpoint = 'https://192.168.43.231:8443'
+            
+            # IP Akasuke
+            # c.api_endpoint = 'https://192.168.43.231:8443'
+            
+            # IP Gojek
+            c.api_endpoint = 'https://10.10.15.140:8443'
+            
             c.verify_ssl = false
         end
     end
@@ -58,10 +64,24 @@ class LxdController < ApplicationController
         redirect_back fallback_location: root_path
     end
 
+    def new
+        configure
+        
+        image_aliases = Hyperkit.image_aliases
+        aliases = Hash.new
+
+        image_aliases.each.with_index do |image_alias, index|
+            aliases[image_alias] = index + 1
+        end
+
+        @image_aliases = image_aliases.to_a
+    end
+
     def create
         configure
-        containerName = params[:name].to_s
-        Hyperkit.create_container(containerName, alias: "container")
+        containerName = params[:name]
+        containerAlias = params[:image_alias]
+        Hyperkit.create_container(containerName, alias: containerAlias)
 
         redirect_back fallback_location: root_path
     end

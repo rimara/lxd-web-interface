@@ -74,32 +74,7 @@
 
 .icons {
     width: 17px;
-}
-
-.icon-containers {
-    margin-right: 15%;
-}
-
-.scrollable-table {
-    width: 100%;
-    overflow-x: scroll;
-}
-
-.scrollable-table table {
-    overflow-y: scroll;
-}
-
-.scrollable-table tbody {
-    overflow-x: scroll;
-    display: block;
-}
-
-.scrollable-table thead {
-    display: table-row;
-}
-
-.scrollable-table th, td {
-    min-width: 120px;
+    margin-right: 25px;
 }
 
 .tooltip {
@@ -109,22 +84,17 @@
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    min-width: 100px;
+    min-width: 70px;
     background-color: black;
     color: #fff;
     text-align: center;
-    padding: 5px 0;
+    padding: 5px 10px;
     border-radius: 6px;
- 
+    font-size: 0.9em;
     position: absolute;
     z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
-}
-
-.action-button {
-    text-decoration: none;
-    size: 50%;
 }
