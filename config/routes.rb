@@ -7,9 +7,14 @@ Rails.application.routes.draw do
     put '/lxd/start/:name', to: 'lxd#start', as: 'lxd_start'
     put '/lxd/restart/:name', to: 'lxd#restart', as: 'lxd_restart'
     delete '/lxd/delete/:name', to: 'lxd#delete', as: 'lxd_delete'
-
-    get 'lxd/new', to: 'lxd#new', as: 'lxd_new'
+    get '/lxd/new', to: 'lxd#new', as: 'lxd_new'
     post '/lxd/create', to: 'lxd#create', as: 'lxd_create'
+
+    get '/ip/', to: 'ip#show', as: 'ip_show'
+    post '/ip/new/', to: 'ip#new', as: 'ip_new'
+    put '/ip/change/:name', to: 'ip#change', as: 'ip_change'
+    put '/ip/update/:name', to: 'ip#update', as: 'ip_update'
+    delete '/ip/delete/:name', to: 'ip#delete', as: 'ip_delete'
 
 end
 

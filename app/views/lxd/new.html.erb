@@ -11,9 +11,9 @@
         <div class="six columns u-full-width">
             <%= form_tag(lxd_create_path(), method: "post", class:"u-full-width") do %>
                 <%= label_tag("Container name:") %>
-                <%= text_field_tag(:name) %>
+                <%= text_field_tag(:name, "", class: "u-full-width") %>
                 <%= label_tag("Container alias:") %>
-                <%= select_tag(:image_alias, options_for_select(@image_aliases)) %>
+                <%= select_tag(:image_alias, options_for_select(@image_aliases), class:"u-full-width") %>
                 <%= submit_tag("Create") %>
             <% end %>
           </div>

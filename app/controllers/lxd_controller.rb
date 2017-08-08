@@ -5,11 +5,7 @@ class LxdController < ApplicationController
             c.client_cert = "#{Rails.root}/client.crt"
             c.client_key = "#{Rails.root}/client.key"
             
-            # IP Akasuke
-            c.api_endpoint = 'https://192.168.43.231:8443'
-            
-            # IP Gojek
-            # c.api_endpoint = 'https://10.10.15.140:8443'
+            c.api_endpoint = IpAddress.find_by(currently_used: 1).ip
             
             c.verify_ssl = false
         end

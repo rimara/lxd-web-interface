@@ -9,14 +9,15 @@
 <div class="container u-max-full-width">
     <div class="row main-header">
         <div class="nine columns">
-            <form class="machine">
-                <label class="machineLabel" for="machineChoice">Machine</label>
-                <select class="chooseMachine">
-                    <option value="machine1">Master</option>
-                    <option value="machine2">Node-1</option>
-                    <option value="machine3">Node-2</option>
-                </select>
-            </form>
+
+            <%= form_tag(ip_new_path(), method: "post", class:"u-full-width") do %>
+                <%= label_tag("New Machine") %>
+                <%= text_field_tag(:name) %>
+                <%= label_tag("New IP") %>
+                <%= text_field_tag(:ip) %>
+                <%= submit_tag("Add") %>
+            <% end %>
+
         </div>
         <div class="three columns">
             <%= link_to button_tag("Add Container", class: "add-new-button button-primary"), lxd_new_path(), class: "add-container-link", :method => :get -%>
