@@ -6,10 +6,10 @@ class LxdController < ApplicationController
             c.client_key = "#{Rails.root}/client.key"
             
             # IP Akasuke
-            # c.api_endpoint = 'https://192.168.43.231:8443'
+            c.api_endpoint = 'https://192.168.43.231:8443'
             
             # IP Gojek
-            c.api_endpoint = 'https://10.10.15.140:8443'
+            # c.api_endpoint = 'https://10.10.15.140:8443'
             
             c.verify_ssl = false
         end
@@ -33,7 +33,6 @@ class LxdController < ApplicationController
     end
 
     def restart
-        configure
         containerName = params[:name].to_s
         Hyperkit.restart_container(containerName)
 
@@ -41,7 +40,6 @@ class LxdController < ApplicationController
     end
 
     def start
-        configure
         containerName = params[:name].to_s
         Hyperkit.start_container(containerName)
 
@@ -49,7 +47,6 @@ class LxdController < ApplicationController
     end
     
     def stop
-        configure
         containerName = params[:name].to_s
         Hyperkit.stop_container(containerName)
 
@@ -57,7 +54,6 @@ class LxdController < ApplicationController
     end
 
     def delete
-        configure
         containerName = params[:name].to_s
         Hyperkit.delete_container(containerName)
 
@@ -65,8 +61,6 @@ class LxdController < ApplicationController
     end
 
     def new
-        configure
-        
         image_aliases = Hyperkit.image_aliases
         aliases = Hash.new
 
@@ -78,12 +72,11 @@ class LxdController < ApplicationController
     end
 
     def create
-        configure
         containerName = params[:name]
         containerAlias = params[:image_alias]
         Hyperkit.create_container(containerName, alias: containerAlias)
 
-        redirect_back fallback_location: root_path
+        redirect_to root_path
     end
 
 end

@@ -8,9 +8,9 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: localhost
-  username: lxd
-  password: admin
-  database: lxd-web-interface
+  username: rimarakhmawatiamalia
+  password:
+  database: lxdwebinterface
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
