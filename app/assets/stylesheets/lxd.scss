@@ -73,7 +73,10 @@
 }
 
 .icons {
-    width: 15%;
+    width: 17px;
+}
+
+.icon-containers {
     margin-right: 15%;
 }
 
@@ -99,4 +102,29 @@
     min-width: 120px;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    min-width: 100px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.action-button {
+    text-decoration: none;
+    size: 50%;
+}

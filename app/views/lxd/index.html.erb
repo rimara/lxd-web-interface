@@ -19,35 +19,53 @@
             </form>
         </div>
         <div class="three columns">
-            <a class="add-container-link" href="#">
-                <button class="add-new-button button-primary">Add Container</button>
-            </a>
+            <%= link_to button_tag("Add Container", class: "add-new-button button"), lxd_create_path("beautiful-cicadas", @name), class: "add-container-link", :method => :post -%>
         </div>
     </div>
-       <div class="scrollable-table u-max-full-width">
-            <table class="u-full-width">
-                <thead class="u-full-width">
-                    <tr>
+    <div class="scrollable-table u-max-full-width">
+        <table class="u-full-width">
+            <thead class="u-full-width">
+                <tr>
                     <th>Name</th>
                     <th>State</th>
                     <th>IPv4</th>
                     <th>IPv6</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="u-full-width">
-                 <% @details.each do |name, detail|  %>
+            <% @details.each do |name, detail|  %>
                 <tr>
                     <td><a class="container-link" href="#"><%= name %></a></td>
-                    <td><%= detail[:status]  %></td>
-                    <td><%= @states[name][:network][:eth0][:addresses][0][:address] %>
-                    <td><%= @states[name][:network][:eth0][:addresses][1][:address] %>
-                    <td><%= image_tag("edit.png", :alt => "Edit", :class => "icons") -%>
-                        <%= image_tag("delete.png", :alt => "Delete", :class => "icons") -%></td>
-                    </tr>
-                    <% end %>
+                    <td><%= detail[:status] %></td>
+                    <td><%= @states[name][:network][:eth0][:addresses][0][:address] unless @states[name][:network].nil? %></td>
+                    <td><%= @states[name][:network][:eth0][:addresses][1][:address] unless @states[name][:network].nil? %></td>
+                    <td><% if detail[:status] != "Running" %>
+                            <%= link_to button_tag("Start", class: "button button-primary action-button"), lxd_start_path(name, @name), class: "action-button", :method => :put -%>
+                        <% else %>
+                            <%= link_to button_tag("Stop", class: "button button-primary action-button"), lxd_stop_path(name, @name), class: "action-button", :method => :put -%>
+                        <% end %>
+                    </td>
+                    <td>
+                        <div class="tooltip icon-containers">
+                            <%= link_to image_tag("restart.png", :alt => "Restart", :class => "icons"), lxd_restart_path(name, @name),:method => :put, data: { confirm: "Are you sure?" } -%>
+                            <span class="tooltiptext">Restart</span>
+                        </div>
+                        <div class="tooltip icon-containers">
+                            <% if detail[:status] != "Running" %>
+                                <%= link_to image_tag("delete.png", :alt => "Delete", :class => "icons"), lxd_delete_path(name, @name),:method => :delete, data: { confirm: "Are you sure?" } -%>
+                                <span class="tooltiptext">Delete</span>
+                            <% else %>
+                                <%= image_tag("delete-disabled.png", :alt => "Delete", :class => "icons") -%>
+                                <span class="tooltiptext">Can't delete running container.</span>  
+                            <% end %>
+                        </div>
+                    </td>
+                </tr>
+            <% end %>
             </tbody>
-         </table>
+        </table>
     </div>
 </div>
 

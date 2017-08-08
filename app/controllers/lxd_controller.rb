@@ -1,13 +1,17 @@
 class LxdController < ApplicationController
 
-    def index
+    def configure
         Hyperkit.configure do |c|
             c.client_cert = "#{Rails.root}/client.crt"
             c.client_key = "#{Rails.root}/client.key"
-            c.api_endpoint = 'https://192.168.70.173:8443'
+            c.api_endpoint = 'https://192.168.43.231:8443'
             c.verify_ssl = false
         end
-        
+    end
+
+    def index
+        configure
+
         container_details = Hash.new
         container_states = Hash.new
         containers = Hyperkit.containers
@@ -22,6 +26,45 @@ class LxdController < ApplicationController
 
     end
 
+    def restart
+        configure
+        containerName = params[:name].to_s
+        Hyperkit.restart_container(containerName)
+
+        redirect_back fallback_location: root_path
+    end
+
+    def start
+        configure
+        containerName = params[:name].to_s
+        Hyperkit.start_container(containerName)
+
+        redirect_back fallback_location: root_path
+    end
+    
+    def stop
+        configure
+        containerName = params[:name].to_s
+        Hyperkit.stop_container(containerName)
+
+        redirect_back fallback_location: root_path
+    end
+
+    def delete
+        configure
+        containerName = params[:name].to_s
+        Hyperkit.delete_container(containerName)
+
+        redirect_back fallback_location: root_path
+    end
+
+    def create
+        configure
+        containerName = params[:name].to_s
+        Hyperkit.create_container(containerName, alias: "container")
+
+        redirect_back fallback_location: root_path
+    end
 
 end
 
