@@ -26,6 +26,20 @@ class LxdController < ApplicationController
         @details = container_details
         @states = container_states
 
+        @machine = IpAddress.find_by(currently_used: 1).machine
+        machineIPs = IpAddress.all
+
+        allMachines = Hash.new
+        machineIPs.each do | ip |
+            allMachines[ip.machine] = ip.machine
+        end
+
+        allMachines["New Machine"] = "new"
+
+        @machines = allMachines.to_a
+
+
+
     end
 
     def restart

@@ -1,6 +1,6 @@
 class IpController < ApplicationController
 
-    def new
+    def create
         machineName = params[:name].to_s
         machineIp = "https://" + params[:ip].to_s + ":8443"
         ip = IpAddress.create(machine: machineName, ip: machineIp)

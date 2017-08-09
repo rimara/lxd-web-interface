@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     post '/lxd/create', to: 'lxd#create', as: 'lxd_create'
 
     get '/ip/', to: 'ip#show', as: 'ip_show'
-    post '/ip/new/', to: 'ip#new', as: 'ip_new'
+    get '/ip/new', to: 'ip#new', as: 'ip_new'
+    post '/ip/create/', to: 'ip#create', as: 'ip_create'
     put '/ip/change/:name', to: 'ip#change', as: 'ip_change'
     put '/ip/update/:name', to: 'ip#update', as: 'ip_update'
     delete '/ip/delete/:name', to: 'ip#delete', as: 'ip_delete'

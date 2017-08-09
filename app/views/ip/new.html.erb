@@ -9,14 +9,14 @@
 <div class="container u-max-full-width">
     <div class="row main-header">
         <div class="six columns u-full-width">
-            <h5 class="current-page">Create New Container</h5>
-            <%= form_tag(lxd_create_path(), method: "post", class:"u-full-width") do %>
-                <%= label_tag("Container name:") %>
+            <h5 class="current-page">Add New Machine</h5>
+            <%= form_tag(ip_create_path(), method: "post", class:"u-full-width") do %>
+                <%= label_tag("New Machine") %>
                 <%= text_field_tag(:name, "", class: "u-full-width") %>
-                <%= label_tag("Container alias:") %>
-                <%= select_tag(:image_alias, options_for_select(@image_aliases), class:"u-full-width") %>
-                <%= submit_tag("Create", :class => "button-primary") %>
+                <%= label_tag("New IP") %>
+                <%= text_field_tag(:ip, "", class: "u-full-width") %>
+                <%= submit_tag("Add", :class => "button-primary") %>
             <% end %>
-          </div>
-      </div>
+        </div>
+    </div>
 </div>

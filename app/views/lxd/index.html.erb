@@ -10,12 +10,9 @@
     <div class="row main-header">
         <div class="nine columns">
 
-            <%= form_tag(ip_new_path(), method: "post", class:"u-full-width") do %>
-                <%= label_tag("New Machine") %>
-                <%= text_field_tag(:name) %>
-                <%= label_tag("New IP") %>
-                <%= text_field_tag(:ip) %>
-                <%= submit_tag("Add") %>
+            <%= form_tag(lxd_create_path(), method: "post", class: "machine") do %>
+                <%= label_tag("Machine", "Machine:", :class => "machineLabel") %>
+                <%= select_tag(:image_alias, options_for_select(@machines, @machine), class:"u-max-full-width chooseMachine") %>
             <% end %>
 
         </div>
