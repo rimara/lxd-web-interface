@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     get '/ip/', to: 'ip#show', as: 'ip_show'
     get '/ip/new', to: 'ip#new', as: 'ip_new'
     post '/ip/create/', to: 'ip#create', as: 'ip_create'
-    put '/ip/change/:name', to: 'ip#change', as: 'ip_change'
+    get '/ip/change/:name', to: 'ip#change', as: 'ip_change'
     put '/ip/update/:name', to: 'ip#update', as: 'ip_update'
     delete '/ip/delete/:name', to: 'ip#delete', as: 'ip_delete'
 

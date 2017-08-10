@@ -9,10 +9,9 @@
 <div class="container u-max-full-width">
     <div class="row main-header">
         <div class="nine columns">
-
             <%= form_tag(lxd_create_path(), method: "post", class: "machine") do %>
                 <%= label_tag("Machine", "Machine:", :class => "machineLabel") %>
-                <%= select_tag(:image_alias, options_for_select(@machines, @machine), class:"u-max-full-width chooseMachine") %>
+                <%= select_tag(:name, options_for_select(@machines, @selected = @machine), class:"u-max-full-width chooseMachine", :onChange => "javascript: location ='/ip/change/' + this.value")  %>
             <% end %>
 
         </div>
