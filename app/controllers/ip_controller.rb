@@ -7,19 +7,23 @@ class IpController < ApplicationController
     end
 
     def change
-        @nama = set(params[:name])
-        redirect_back fallback_location: root_path
+        unset
+        set
     end
 
-    def set(machineName)
-        currentMachine = IpAddress.find_by(currently_used: 1)
-        currentMachine.currently_used = 0
-        currentMachine.save
-
-        newMachineName = machineName.to_s
+    def set
+        newMachineName = params[:name]
         newMachine = IpAddress.find_by(machine: newMachineName)
         newMachine.currently_used = 1
         newMachine.save
+
+        redirect_to lxd_index_path
+    end
+
+    def unset
+        currentMachine = IpAddress.find_by(currently_used: 1)
+        currentMachine.currently_used = 0
+        currentMachine.save
     end
 
     def update

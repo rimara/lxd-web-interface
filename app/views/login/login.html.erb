@@ -1,3 +1,17 @@
-<%= form_tag :action => 'login' do %>
-    <p>Please enter the following for aunthentication</p>
-<% end -%>    
+<div class="background">
+    <div class="outer">
+        <div class="middle">
+            <div class="login-form">
+                <div class="mini-logo">
+                    <%= image_tag("logo.png", :alt => "Logo", :class => "logo") -%>
+                    <h5 class="mini-title"><strong>LXWeb</strong></h5>
+                </div>
+                <%= form_tag(ip_set_path(), method: "put", class:"u-full-width") do %>
+                    <%= label_tag("Machine", "Default machine:") -%>
+                    <%= select_tag(:name, options_for_select(@machines), class:"u-full-width")  %>
+                    <%= submit_tag("Enter", :class => "button-primary enter-button") %>
+                <% end -%>
+            </div>
+        </div>
+    </div>
+</div>  

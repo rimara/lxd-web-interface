@@ -1,7 +1,7 @@
 <div id="title" class="u-max-full-width">
     <h3 class="title-header">
-        <%= image_tag("logo.png", :alt => "Logo", :class => "logo") -%>
-        <strong>LXWeb</strong>
+        <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), root_path() -%>
+        <%= link_to "LXWeb", root_path(), :class => "web-title" -%> 
     </h3>
     <span class="subtitle-header">Web Interface for LXD Containers</span>
 </div>
@@ -12,6 +12,7 @@
             <%= form_tag(lxd_create_path(), method: "post", class: "machine") do %>
                 <%= label_tag("Machine", "Machine:", :class => "machineLabel") %>
                 <%= select_tag(:name, options_for_select(@machines, @selected = @machine), class:"u-max-full-width chooseMachine", :onChange => "javascript: location ='/ip/change/' + this.value")  %>
+                <%= link_to "New", ip_new_path(), :class => "button"%>
             <% end %>
 
         </div>

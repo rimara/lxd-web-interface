@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     
-    root 'lxd#index'
+    root 'login#login'
 
+    get '/lxd/', to: 'lxd#index', as: 'lxd_index'
     put '/lxd/stop/:name', to: 'lxd#stop', as: 'lxd_stop'
     put '/lxd/start/:name', to: 'lxd#start', as: 'lxd_start'
     put '/lxd/restart/:name', to: 'lxd#restart', as: 'lxd_restart'
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
     get '/ip/change/:name', to: 'ip#change', as: 'ip_change'
     put '/ip/update/:name', to: 'ip#update', as: 'ip_update'
     delete '/ip/delete/:name', to: 'ip#delete', as: 'ip_delete'
+    put 'ip/set/', to: 'ip#set', as: 'ip_set'
 
 end
 

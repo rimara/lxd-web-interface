@@ -34,9 +34,7 @@ class LxdController < ApplicationController
             allMachines[ip.machine] = ip.machine
         end
 
-        allMachines["New Machine"] = "new"
-
-        @machines = allMachines.to_a
+        @machines = allMachines.to_a.sort
 
 
 
@@ -46,28 +44,28 @@ class LxdController < ApplicationController
         containerName = params[:name].to_s
         Hyperkit.restart_container(containerName)
 
-        redirect_back fallback_location: root_path
+        redirect_back fallback_location: lxd_index_path
     end
 
     def start
         containerName = params[:name].to_s
         Hyperkit.start_container(containerName)
 
-        redirect_back fallback_location: root_path
+        redirect_back fallback_location: lxd_index_path
     end
     
     def stop
         containerName = params[:name].to_s
         Hyperkit.stop_container(containerName)
 
-        redirect_back fallback_location: root_path
+        redirect_back fallback_location: lxd_index_path
     end
 
     def delete
         containerName = params[:name].to_s
         Hyperkit.delete_container(containerName)
 
-        redirect_back fallback_location: root_path
+        redirect_back fallback_location: lxd_index_path
     end
 
     def new
@@ -86,7 +84,7 @@ class LxdController < ApplicationController
         containerAlias = params[:image_alias]
         Hyperkit.create_container(containerName, alias: containerAlias)
 
-        redirect_to root_path
+        redirect_to lxd_index_path
     end
 
 end
