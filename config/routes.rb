@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     delete '/lxd/delete/:name', to: 'lxd#delete', as: 'lxd_delete'
     get '/lxd/new', to: 'lxd#new', as: 'lxd_new'
     post '/lxd/create', to: 'lxd#create', as: 'lxd_create'
+    get '/lxd/detail/:name', to: 'lxd#detail', as: 'lxd_detail'
 
     get '/ip/', to: 'ip#show', as: 'ip_show'
     get '/ip/new', to: 'ip#new', as: 'ip_new'
