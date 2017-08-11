@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     put '/ip/update/:name', to: 'ip#update', as: 'ip_update'
     delete '/ip/delete/:name', to: 'ip#delete', as: 'ip_delete'
     put 'ip/set/', to: 'ip#set', as: 'ip_set'
+    put 'logout', to: 'ip#logout', as: 'ip_logout'
 
 end
 

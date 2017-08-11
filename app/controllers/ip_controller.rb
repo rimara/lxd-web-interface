@@ -7,11 +7,14 @@ class IpController < ApplicationController
     end
 
     def change
-        unset
         set
     end
 
     def set
+        unless IpAddress.find_by(currently_used: 1).nil?
+            unset
+        end
+
         newMachineName = params[:name]
         newMachine = IpAddress.find_by(machine: newMachineName)
         newMachine.currently_used = 1
@@ -24,6 +27,12 @@ class IpController < ApplicationController
         currentMachine = IpAddress.find_by(currently_used: 1)
         currentMachine.currently_used = 0
         currentMachine.save
+    end
+
+    def logout
+        unset
+
+        redirect_to root_path
     end
 
     def update
