@@ -1,0 +1,20 @@
+{
+  "name": "lxd-web-interface",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Rima Rakhmawati Amalia <rima.r.amalia@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rimara/lxd-web-interface",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "xterm.js": "^2.9.2"
+  }
+}

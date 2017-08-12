@@ -10,7 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require bower_components/xterm.js/dist/xterm.js
+//= require xterm.js/dist/xterm
+//= require xterm.js/dist/addons/fit/fit
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
