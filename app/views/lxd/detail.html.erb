@@ -1,5 +1,7 @@
 <% content_for :additionals do %> 
     <%= stylesheet_link_tag 'xterm.js/dist/xterm' %>
+    <%= javascript_include_tag 'jquery-3.2.1.min' %>
+    <%= javascript_include_tag 'jquery-ui.min' %>
     <%= javascript_include_tag 'xterm.js/dist/xterm' %>
     <%= javascript_include_tag 'xterm.js/dist/addons/fit/fit' %>
 <% end %>
@@ -14,7 +16,10 @@
 </div>
 
 <div class="container u-max-full-width">
-    <div id="terminal" style="height: 300px"></div>
+    <div id="accordion" class="main-header">
+    <h3 class="accordion-title">Console</h3>
+        <div id="terminal"></div>
+    </div>
 </div>
 
 <script>
@@ -22,4 +27,12 @@
     term.open(document.getElementById('terminal'), true);
     term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ');
     term.fit(); 
+</script>
+
+<script>
+$( function() {
+  $( "#accordion" ).accordion({
+    collapsible: true
+  });
+} );
 </script>

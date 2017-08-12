@@ -109,3 +109,18 @@
     display: inline-block;
     font-weight: bold;
 }
+
+#terminal {
+    height: 300px;
+    padding: 20px;
+    background-color: black;
+}
+
+.ui-widget {
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.ui-accordion-header-active {
+    background-color: #1697e2;
+    border: #1697e2;
+}
