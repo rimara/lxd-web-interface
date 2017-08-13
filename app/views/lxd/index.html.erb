@@ -35,7 +35,7 @@
             <tbody class="u-full-width">
             <% @details.each do |name, detail|  %>
                 <tr>
-                    <td><a class="container-link" href="#"><%= name %></a></td>
+                    <td><a class="container-link" href="#"><%= link_to name, lxd_detail_path(name, @name), :method => :get, :style => "text-decoration: none" %></a></td>
                     <td><%= detail[:status] %></td>
                     <% unless  @states[name][:network].nil? %>
                         <td><%= @states[name][:network][:eth0][:addresses][0][:address] unless @states[name][:network][:eth0][:addresses].size == 1 %></td>

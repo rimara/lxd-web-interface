@@ -111,7 +111,7 @@
 }
 
 #terminal {
-    height: 300px;
+    height: 250px;
     padding: 20px;
     background-color: black;
 }
@@ -123,4 +123,8 @@
 .ui-accordion-header-active {
     background-color: #1697e2;
     border: #1697e2;
+}
+
+#accordion {
+    margin-bottom: 50px;
 }

@@ -35,9 +35,11 @@ class LxdController < ApplicationController
         end
 
         @machines = allMachines.to_a.sort
+    end
 
-
-
+    def detail
+        containerName = params[:name].to_s
+        @containerDetail = Hyperkit.container(containerName).to_hash
     end
 
     def restart

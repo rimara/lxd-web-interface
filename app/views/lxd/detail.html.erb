@@ -16,18 +16,71 @@
 </div>
 
 <div class="container u-max-full-width">
-    <div id="accordion" class="main-header">
-    <h3 class="accordion-title">Console</h3>
-        <div id="terminal"></div>
+    <h5 class="current-page main-header">Container Info</h5>
+    <div id="accordion">
+        <p class="accordion-title">Detail</p>
+        <div class="detail">
+            <table width="90%">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td colspan="2"><%= @containerDetail[:name] %></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td colspan="2"><%= @containerDetail[:status] %></td>
+                    </tr>
+                    <tr>
+                        <th>Architecture</th>
+                        <td colspan="2"><%= @containerDetail[:architecture] %></td>
+                    </tr>
+                    <tr>
+                        <th rowspan="7">Image</th>
+                        <tr colspan="2">
+                            <th>Architecture</th>
+                            <td><%= @containerDetail[:config][:"image.architecture"] %></td>
+                        </tr>
+                        <tr colspan="2">
+                            <th>Label</th>
+                            <td><%= @containerDetail[:config][:"image.label"] %></td>
+                        </tr>
+                        <tr colspan="2">
+                            <th>OS</th>
+                            <td><%= @containerDetail[:config][:"image.os"] %></td>
+                        </tr>
+                        <tr colspan="2">
+                            <th>Release</th>
+                            <td><%= @containerDetail[:config][:"image.release"] %></td>
+                        </tr>
+                        <tr colspan="2">
+                            <th>Serial</th>
+                            <td><%= @containerDetail[:config][:"image.serial"] %></td>
+                        </tr>
+                        <tr colspan="2">
+                            <th>Version</th>
+                            <td><%= @containerDetail[:config][:"image.version"] %></td>
+                        </tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <% if @containerDetail[:status] == "Running" %>
+            <p class="accordion-title">Console</p>
+            <div id="terminal">
+                <script>
+                    var term = new Terminal();
+                    term.open(document.getElementById('terminal'), true);
+                    term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ');
+                    term.fit(); 
+                </script>
+            </div>
+        <% end %>
+
     </div>
 </div>
 
-<script>
-    var term = new Terminal();
-    term.open(document.getElementById('terminal'), true);
-    term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ');
-    term.fit(); 
-</script>
+
 
 <script>
 $( function() {
