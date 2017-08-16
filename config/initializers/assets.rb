@@ -11,9 +11,9 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-# Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( xterm.js/dist/xterm.css )
-Rails.application.config.assets.precompile += %w( xterm.js/dist/xterm.js )
-Rails.application.config.assets.precompile += %w( xterm.js/dist/addons/fit/fit.js )
+
 Rails.application.config.assets.precompile += %w( jquery-3.2.1.min.js )
 Rails.application.config.assets.precompile += %w( jquery-ui.min.js )
+Rails.application.config.assets.precompile += %w( xterm/dist/xterm.css )
+Rails.application.config.assets.precompile += %w( xterm/dist/xterm.js )
+Rails.application.config.assets.precompile += %w( xterm/dist/addons/fit/fit.js )
