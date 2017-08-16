@@ -1,8 +1,48 @@
-calculate:
+create_container:
   cron: "*/10 * * * *"
   queue: cron
   class: CronTask
   args: "create_container"
   description: Creates container
+  rails_envs: development, production, staging
+
+read_container:
+  cron: "*/10 * * * *"
+  queue: cron
+  class: CronTask
+  args: "read_container"
+  description: Reads container
+  rails_envs: development, production, staging
+
+update_container:
+  cron: "*/10 * * * *"
+  queue: cron
+  class: CronTask
+  args: "update_container"
+  description: Updates container
+  rails_envs: development, production, staging
+
+delete_container:
+  cron: "*/10 * * * *"
+  queue: cron
+  class: CronTask
+  args: "create_container"
+  description: Delete container
+  rails_envs: development, production, staging
+
+stop_container:
+  cron: "*/10 * * * *"
+  queue: cron
+  class: CronTask
+  args: "stop_container"
+  description: Delete container
+  rails_envs: development, production, staging
+
+restart_container:
+  cron: "*/10 * * * *"
+  queue: cron
+  class: CronTask
+  args: "restart_container"
+  description: Delete container
   rails_envs: development, production, staging
 
