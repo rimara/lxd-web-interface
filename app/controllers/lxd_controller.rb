@@ -4,9 +4,9 @@ class LxdController < ApplicationController
         Hyperkit.configure do |c|
             c.client_cert = "#{Rails.root}/client.crt"
             c.client_key = "#{Rails.root}/client.key"
-            
+
             c.api_endpoint = IpAddress.find_by(currently_used: 1).ip
-            
+
             c.verify_ssl = false
         end
     end
@@ -17,7 +17,7 @@ class LxdController < ApplicationController
         container_details = Hash.new
         container_states = Hash.new
         containers = Hyperkit.containers
-        
+
         containers.each do |container|
             container_details[container] = Hyperkit.container(container).to_hash
             container_states[container] = Hyperkit.container_state(container).to_hash
@@ -55,7 +55,7 @@ class LxdController < ApplicationController
 
         redirect_back fallback_location: lxd_index_path
     end
-    
+
     def stop
         containerName = params[:name].to_s
         Hyperkit.stop_container(containerName)

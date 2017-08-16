@@ -21,20 +21,43 @@ class CronTask
             now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
             puts "#{now} %s#%s - #{message}" % [self.name, method]
         end
-
     end
 
+    # lxd/create
     def create_container
         containerName = params[:name]
         containerAlias = params[:image_alias]
         Hyperkit.create_container(containerName, alias: containerAlias)
-        redirect_to lxd_index_path
     end
 
+    # lxd/detail
+    def read_container
+        containerName = params[:name].to_s
+        @containerDetail = Hyperkit.container(containerName).to_hash
+    end
+
+    # To-do: update container
+    def update_container
+        # Logic here
+    end
+
+    # lxd/delete
+    def delete_container
+        containerName = params[:name].to_s
+        Hyperkit.delete_container(containerName)
+    end
+
+    ## Ouside of CRUD: stop, restart
+    # lxd/stop
     def stop_container
-        # logic here
+        containerName = params[:name].to_s
+        Hyperkit.stop_container(containerName)
+    end
+
+    # lxd/restart
+    def restart_container
+        containerName = params[:name].to_s
+        Hyperkit.restart_container(containerName)
     end
 
 end
-
-
