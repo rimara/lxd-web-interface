@@ -1,88 +1,102 @@
 <% content_for :additionals do %> 
-    <%= stylesheet_link_tag 'xterm/dist/xterm' %>
-    <%= javascript_include_tag 'jquery-3.2.1.min' %>
-    <%= javascript_include_tag 'jquery-ui.min' %>
-    <%= javascript_include_tag 'xterm/dist/xterm' %>
-    <%= javascript_include_tag 'xterm/dist/addons/fit/fit' %>
+  <%= stylesheet_link_tag 'xterm/dist/xterm' %>
+  <%= javascript_include_tag 'jquery-3.2.1.min' %>
+  <%= javascript_include_tag 'jquery-ui.min' %>
+  <%= javascript_include_tag 'xterm/dist/xterm' %>
+  <%= javascript_include_tag 'xterm/dist/addons/fit/fit' %>
+  <%= javascript_include_tag 'xterm/dist/addons/attach/attach' %>
 <% end %>
 
 <div id="title" class="u-max-full-width">
-    <h3 class="title-header">
-        <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
-        <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%> 
-    </h3>
-    <span class="subtitle-header">Web Interface for LXD Containers</span>
-    <%= link_to "Logout", ip_logout_path, :method => :put, :class => "u-pull-right logout" %>
+  <h3 class="title-header">
+    <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
+    <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%> 
+  </h3>
+  <span class="subtitle-header">Web Interface for LXD Containers</span>
+  <%= link_to "Logout", ip_logout_path, :method => :put, :class => "u-pull-right logout" %>
 </div>
 
 <div class="container u-max-full-width">
-    <h5 class="current-page main-header">Container Info</h5>
-    <div id="accordion">
-        <p class="accordion-title">Detail</p>
-        <div class="detail">
-            <table width="90%">
-                <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <td colspan="2"><%= @containerDetail[:name] %></td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
-                        <td colspan="2"><%= @containerDetail[:status] %></td>
-                    </tr>
-                    <tr>
-                        <th>Architecture</th>
-                        <td colspan="2"><%= @containerDetail[:architecture] %></td>
-                    </tr>
-                    <tr>
-                        <th rowspan="7">Image</th>
-                        <tr colspan="2">
-                            <th>Architecture</th>
-                            <td><%= @containerDetail[:config][:"image.architecture"] %></td>
-                        </tr>
-                        <tr colspan="2">
-                            <th>Label</th>
-                            <td><%= @containerDetail[:config][:"image.label"] %></td>
-                        </tr>
-                        <tr colspan="2">
-                            <th>OS</th>
-                            <td><%= @containerDetail[:config][:"image.os"] %></td>
-                        </tr>
-                        <tr colspan="2">
-                            <th>Release</th>
-                            <td><%= @containerDetail[:config][:"image.release"] %></td>
-                        </tr>
-                        <tr colspan="2">
-                            <th>Serial</th>
-                            <td><%= @containerDetail[:config][:"image.serial"] %></td>
-                        </tr>
-                        <tr colspan="2">
-                            <th>Version</th>
-                            <td><%= @containerDetail[:config][:"image.version"] %></td>
-                        </tr>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <% if @containerDetail[:status] == "Running" %>
-            <p class="accordion-title">Console</p>
-            <div id="terminal"></div>
-        <% end %>
-
+  <h5 class="current-page main-header">Container Info</h5>
+  <div id="accordion">
+    <p class="accordion-title">Detail</p>
+    <div class="detail">
+      <table width="90%">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td colspan="2"><%= @containerDetail[:name] %></td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td colspan="2"><%= @containerDetail[:status] %></td>
+          </tr>
+          <tr>
+            <th>Architecture</th>
+            <td colspan="2"><%= @containerDetail[:architecture] %></td>
+          </tr>
+          <tr>
+            <th rowspan="7">Image</th>
+            <tr colspan="2">
+              <th>Architecture</th>
+              <td><%= @containerDetail[:config][:"image.architecture"] %></td>
+            </tr>
+            <tr colspan="2">
+              <th>Label</th>
+              <td><%= @containerDetail[:config][:"image.label"] %></td>
+            </tr>
+            <tr colspan="2">
+              <th>OS</th>
+              <td><%= @containerDetail[:config][:"image.os"] %></td>
+            </tr>
+            <tr colspan="2">
+              <th>Release</th>
+              <td><%= @containerDetail[:config][:"image.release"] %></td>
+            </tr>
+            <tr colspan="2">
+              <th>Serial</th>
+              <td><%= @containerDetail[:config][:"image.serial"] %></td>
+            </tr>
+            <tr colspan="2">
+              <th>Version</th>
+              <td><%= @containerDetail[:config][:"image.version"] %></td>
+            </tr>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <% if @containerDetail[:status] == "Running" %>
+      <p class="accordion-title">Console</p>
+      <div id="terminal"></div>
+    <% end %>
+
+  </div>
 </div>
 
 <script>
-    var term = new Terminal();
-    term.open(document.getElementById('terminal'), true);
-    term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ');
+  const fs = require('fs');
+  const WebSocket = require('ws');
+  var term = new Terminal() ;
+  
+  // CONNECTING TO WEBSOCKET
+  const wsoptions = {
+    cert: fs.readFileSync(<%= "#{Rails.root}/client.crt" %>),
+    key: fs.readFileSync(<%= "#{Rails.root}/client.key" %>),
+    rejectUnauthorized: false
+  }
+
+  var socket = new WebSocket('wss://10.10.12.116:8443/1.0/events?type=operation', wsoptions);
+
+  term.attach(socket);
+  term.open(document.getElementById('terminal'), true);
+  term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ');
 </script>
 
 <script>
-$( function() {
-  $( "#accordion" ).accordion({
-    collapsible: true
-  });
-} );
+  $( function() {
+    $( "#accordion" ).accordion({
+      collapsible: true
+    });
+  } );
 </script>

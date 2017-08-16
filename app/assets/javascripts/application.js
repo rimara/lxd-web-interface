@@ -12,6 +12,7 @@
 //
 //= require xterm/dist/xterm
 //= require xterm/dist/addons/fit/fit
+//= require xterm/dist/addons/attach/attach
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
