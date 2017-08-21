@@ -8,7 +8,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: localhost
-  username: rimarakhmawatiamalia
+  username: postgres 
   password:
   database: lxdwebinterface
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

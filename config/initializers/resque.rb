@@ -1,5 +1,6 @@
 require 'resque'
-require 'resque_scheduler'
+#require 'resque_scheduler'
+require 'resque/scheduler'
 
 config = YAML.load_file(Rails.root.join('config', 'resque.yml'))
 schedule = YAML.load_file(Rails.root.join('config', 'schedule.yml'))
