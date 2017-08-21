@@ -40,6 +40,8 @@ class LxdController < ApplicationController
     def detail
         containerName = params[:name].to_s
         @containerDetail = Hyperkit.container(containerName).to_hash
+        @cert = File.read(Rails.root + 'client.crt')
+        @key = File.read(Rails.root + 'client.key')
     end
 
     def restart
