@@ -75,18 +75,18 @@
 </div>
 
 <script>
-  const fs = require('fs');
-  const WebSocket = require('ws');
+
+  // const WebSocket = require('ws');
   var term = new Terminal() ;
   
   // CONNECTING TO WEBSOCKET
   const wsoptions = {
-    cert: fs.readFileSync(<%= "#{Rails.root}/client.crt" %>),
-    key: fs.readFileSync(<%= "#{Rails.root}/client.key" %>),
+    cert: File.read("<%= '#{Rails.root}/client.crt'  %>"),
+    key: File.read("<%= '#{Rails.root}/client.key' %>"),
     rejectUnauthorized: false
   }
 
-  var socket = new WebSocket('wss://10.10.12.116:8443/1.0/events?type=operation', wsoptions);
+  var socket = new WebSocket('wss://10.10.12.116:8443/1.0/operations/1f707007-ccd1-4bcb-8400-9b03e095d748', wsoptions);
 
   term.attach(socket);
   term.open(document.getElementById('terminal'), true);
