@@ -91,16 +91,6 @@
   charWidth,
   charHeight;
 
-<<<<<<< HEAD
-  // const WebSocket = require('ws');
-  var term = new Terminal() ;
-
-  // CONNECTING TO WEBSOCKET
-  var socket = new WebSocket('wss://10.10.12.116:8443/1.0/operations/1f707007-ccd1-4bcb-8400-9b03e095d748', {
-    cert: `<%= @cert %>`,
-    key: `<%= @key %>`,
-    rejectUnauthorized: false
-=======
   var terminalContainer = document.getElementById('terminal-container');
 
   function setTerminalSize () {
@@ -190,7 +180,6 @@
     socket.onopen = runRealTerminal;
     socket.onclose = runFakeTerminal;
     socket.onerror = runFakeTerminal;
->>>>>>> e54a97a5d0ea8beb1520464d19e0591a3cf0e853
   });
   });
   }
