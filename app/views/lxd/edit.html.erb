@@ -1,0 +1,26 @@
+<div id="title" class="u-max-full-width">
+    <h3 class="title-header">
+        <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
+        <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%>
+    </h3>
+    <span class="subtitle-header">Web Interface for LXD Containers</span>
+    <%= link_to "Logout", ip_logout_path, :method => :put, :class => "u-pull-right logout" %>
+</div>
+
+<div class="container u-max-full-width">
+    <div class="row main-header">
+        <div class="six columns u-full-width">
+            <h5 class="current-page">Update Container</h5>
+            <%= form_tag(lxd_update_path(), method: "put", class:"u-full-width") do %>
+                <%= label_tag("Name") %>
+                <%= text_field_tag(:rename, @container_name, class: "u-full-width") %>
+                <%= label_tag("Limit CPU") %>
+                <%= text_field_tag(:new_limits_cpu, @limits_cpu, class: "u-full-width") %>
+                <%= label_tag("Limit Memory") %>
+                <%= text_field_tag(:new_limits_memory, @limits_memory, class: "u-full-width", min: 100, max: 1000) %>
+
+                <%= submit_tag("update", :class => "button-primary") %>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -91,5 +91,30 @@ class LxdController < ApplicationController
         redirect_to lxd_index_path
     end
 
-end
+    def update
+        containerName = params[:name].to_s
+        currentConfig = Hyperkit.container(containerName)
+        newConfiguration = Hash.new
+        newConfiguration = currentConfig[:expanded_config].to_hash
 
+        newConfiguration[:"limits.cpu"] = params[:new_limits_cpu]
+        newConfiguration[:"limits.memory"] = params[:new_limits_memory] + 'MB'
+        Hyperkit.rename_container(containerName, params[:rename])
+        Hyperkit.update_container(containerName, newConfiguration)
+
+        redirect_back fallback_location: lxd_index_path
+    end
+
+    def edit
+        containerName = params[:name].to_s
+        @container_name = containerName
+        currentConfig = Hyperkit.container(@container_name)
+        currentConfigHash = Hash.new
+        currentConfigHash = currentConfig[:expanded_config].to_hash
+        @limits_cpu = currentConfigHash[:"limits.cpu"]
+        @limits_memory = currentConfigHash[:"limits.memory"].chomp('MB')
+
+
+    end
+
+end
