@@ -13,11 +13,11 @@
             <h5 class="current-page">Update Container</h5>
             <%= form_tag(lxd_update_path(), method: "put", class:"u-full-width") do %>
                 <%= label_tag("Name") %>
-                <%= text_field_tag(:rename, @container_name, class: "u-full-width") %>
+                <%= text_field_tag(:rename, @containerDetail[:name], class: "u-full-width") %>
                 <%= label_tag("Limit CPU") %>
-                <%= text_field_tag(:new_limits_cpu, @limits_cpu, class: "u-full-width") %>
+                <%= text_field_tag(:new_limits_cpu, @containerDetail[:expanded_config][:"limits.cpu"], class: "u-full-width") %>
                 <%= label_tag("Limit Memory") %>
-                <%= text_field_tag(:new_limits_memory, @limits_memory, class: "u-full-width", min: 100, max: 1000) %>
+                <%= text_field_tag(:new_limits_memory, @containerDetail[:expanded_config][:"limits.memory"], class: "u-full-width", min: 100, max: 1000) %>
 
                 <%= submit_tag("update", :class => "button-primary") %>
             <% end %>

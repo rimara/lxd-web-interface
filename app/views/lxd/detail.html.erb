@@ -1,4 +1,4 @@
-<% content_for :additionals do %> 
+<% content_for :additionals do %>
   <%= stylesheet_link_tag 'xterm/dist/xterm' %>
   <%= javascript_include_tag 'jquery-3.2.1.min' %>
   <%= javascript_include_tag 'jquery-ui.min' %>
@@ -10,7 +10,7 @@
 <div id="title" class="u-max-full-width">
   <h3 class="title-header">
     <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
-    <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%> 
+    <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%>
   </h3>
   <span class="subtitle-header">Web Interface for LXD Containers</span>
   <%= link_to "Logout", ip_logout_path, :method => :put, :class => "u-pull-right logout" %>
@@ -34,6 +34,14 @@
           <tr>
             <th>Architecture</th>
             <td colspan="2"><%= @containerDetail[:architecture] %></td>
+          </tr>
+          <tr>
+            <th>Limits CPU</th>
+            <td colspan="2"><%= @containerDetail[:expanded_config][:"limits.cpu"] %></td>
+          </tr>
+          <tr>
+            <th>Limits Memory</th>
+            <td colspan="2"><%= @containerDetail[:expanded_config][:"limits.memory"] %></td>
           </tr>
           <tr>
             <th rowspan="7">Image</th>
@@ -78,7 +86,7 @@
 
   // const WebSocket = require('ws');
   var term = new Terminal() ;
-  
+
   // CONNECTING TO WEBSOCKET
   var socket = new WebSocket('wss://10.10.12.116:8443/1.0/operations/1f707007-ccd1-4bcb-8400-9b03e095d748', {
     cert: `<%= @cert %>`,
