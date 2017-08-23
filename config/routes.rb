@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-    
+
     root 'login#login'
 
     get '/lxd/', to: 'lxd#index', as: 'lxd_index'
@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     delete '/lxd/delete/:name', to: 'lxd#delete', as: 'lxd_delete'
     get '/lxd/new', to: 'lxd#new', as: 'lxd_new'
     post '/lxd/create', to: 'lxd#create', as: 'lxd_create'
+    get '/lxd/edit/:name', to: 'lxd#edit', as: 'lxd_edit'
+    put '/lxd/update/:name', to: 'lxd#update', as: 'lxd_update'
     get '/lxd/detail/:name', to: 'lxd#detail', as: 'lxd_detail'
 
     get '/ip/', to: 'ip#show', as: 'ip_show'
@@ -22,4 +24,3 @@ Rails.application.routes.draw do
     put 'logout', to: 'ip#logout', as: 'ip_logout'
 
 end
-
