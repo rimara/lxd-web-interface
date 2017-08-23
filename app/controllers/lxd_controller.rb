@@ -4,6 +4,7 @@ class LxdController < ApplicationController
         Hyperkit.configure do |c|
             c.client_cert = "#{Rails.root}/client.crt"
             c.client_key = "#{Rails.root}/client.key"
+            c.auto_sync = true
 
             c.api_endpoint = IpAddress.find_by(currently_used: 1).ip
 
@@ -40,6 +41,8 @@ class LxdController < ApplicationController
     def detail
         containerName = params[:name].to_s
         @containerDetail = Hyperkit.container(containerName).to_hash
+        @cert = File.read(Rails.root + 'client.crt')
+        @key = File.read(Rails.root + 'client.key')
     end
 
     def restart
@@ -84,10 +87,45 @@ class LxdController < ApplicationController
     def create
         containerName = params[:name]
         containerAlias = params[:image_alias]
-        Hyperkit.create_container(containerName, alias: containerAlias)
+        Hyperkit.create_container(containerName,
+            alias: containerAlias,
+            expanded_config: {
+                "limits.cpu" => params[:new_limits_cpu],
+                "limits.memory" => params[:new_limits_memory],
+                "limits.memory.swap" => params[:new_limits_memory_swap]
+            })
 
         redirect_to lxd_index_path
     end
 
-end
+    def update
+        containerName = params[:name].to_s
+        @containerDetail = Hyperkit.container(containerName).to_hash
+        #newConfiguration = Hash.new
+        #newConfiguration = currentConfig[:expanded_config].to_hash
 
+        #newConfiguration[:"limits.cpu"] = params[:new_limits_cpu]
+        #newConfiguration[:"limits.memory"] = params[:new_limits_memory] + 'MB'
+
+        puts "Before"
+        puts @containerDetail[:expanded_config][:"limits.cpu"]
+        #puts @containerDetail[:expanded_config][:"limits.memory"]
+        @containerDetail[:expanded_config][:"limits.cpu"] = params[:new_limits_cpu]
+        @containerDetail[:expanded_config][:"limits.memory"] = params[:new_limits_memory]
+
+        #currentConfig[:expanded_config] = newConfiguration
+        puts @containerDetail[:expanded_config][:"limits.cpu"]
+        Hyperkit.update_container(containerName, @containerDetail, sync: true)
+        puts Hyperkit.container(containerName)[:expanded_config][:"limits.cpu"]
+
+        redirect_to lxd_index_path
+    end
+
+    def edit
+        containerName = params[:name].to_s
+        @containerDetail = Hyperkit.container(containerName).to_hash
+
+
+    end
+
+end

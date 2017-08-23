@@ -4,6 +4,12 @@ class IpController < ApplicationController
         machineName = params[:name].to_s
         machineIp = "https://" + params[:ip].to_s + ":8443"
         ip = IpAddress.create(machine: machineName, ip: machineIp)
+
+        if IpAddress.find_by(currently_used: 1).nil?
+            redirect_to root_path
+        else
+            redirect_to lxd_index_path
+        end
     end
 
     def change

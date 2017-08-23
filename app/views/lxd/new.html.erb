@@ -1,7 +1,7 @@
 <div id="title" class="u-max-full-width">
     <h3 class="title-header">
         <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
-        <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%> 
+        <%= link_to "LXWeb", lxd_index_path, :class => "web-title" -%>
     </h3>
     <span class="subtitle-header">Web Interface for LXD Containers</span>
     <%= link_to "Logout", ip_logout_path, :method => :put, :class => "u-pull-right logout" %>
@@ -13,9 +13,15 @@
             <h5 class="current-page">Create New Container</h5>
             <%= form_tag(lxd_create_path(), method: "post", class:"u-full-width") do %>
                 <%= label_tag("Container name:") %>
-                <%= text_field_tag(:name, "", class: "u-full-width") %>
+                <%= text_field_tag(:name, "default", class: "u-full-width") %>
                 <%= label_tag("Container alias:") %>
                 <%= select_tag(:image_alias, options_for_select(@image_aliases), class:"u-full-width") %>
+                <%= label_tag("Limits CPU:") %>
+                <%= text_field_tag(:new_limits_cpu, "2", class: "u-full-width") %>
+                <%= label_tag("Limits Memory (MB):") %>
+                <%= text_field_tag(:new_limits_memory, "256MB", class: "u-full-width") %>
+                <%= label_tag("Limits Memory Swap:") %>
+                <%= select_tag(:new_limits_memory_swap, options_for_select([true,false]), class:"u-full-width") %>
                 <%= submit_tag("Create", :class => "button-primary") %>
             <% end %>
           </div>
