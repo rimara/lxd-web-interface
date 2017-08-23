@@ -10,6 +10,7 @@
                     <%= label_tag("Machine", "Default machine:") -%>
                     <%= select_tag(:name, options_for_select(@machines), class:"u-full-width")  %>
                     <%= submit_tag("Enter", :class => "button-primary enter-button") %>
+                    <%= link_to "New IP", ip_new_path(), :class => "button enter-button"%>
                 <% end -%>
             </div>
         </div>
