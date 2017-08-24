@@ -110,8 +110,8 @@
     font-weight: bold;
 }
 
-#terminal {
-    height: 250px;
+#terminal-container {
+    height: 500px;
     padding: 20px;
     background-color: black;
 }
@@ -127,4 +127,8 @@
 
 #accordion {
     margin-bottom: 50px;
+}
+
+.accordion-title {
+    font-weight: bold;
 }

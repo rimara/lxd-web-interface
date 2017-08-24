@@ -1,12 +1,3 @@
-<% content_for :additionals do %>
-  <%= stylesheet_link_tag 'xterm/dist/xterm' %>
-  <%= javascript_include_tag 'jquery-3.2.1.min' %>
-  <%= javascript_include_tag 'jquery-ui.min' %>
-  <%= javascript_include_tag 'xterm/dist/xterm' %>
-  <%= javascript_include_tag 'xterm/dist/addons/fit/fit' %>
-  <%= javascript_include_tag 'xterm/dist/addons/attach/attach' %>
-<% end %>
-
 <div id="title" class="u-max-full-width">
   <h3 class="title-header">
     <%= link_to image_tag("logo.png", :alt => "Logo", :class => "logo"), lxd_index_path -%>
@@ -19,7 +10,6 @@
 <div class="container u-max-full-width">
   <h5 class="current-page main-header">Container Info</h5>
   <div id="accordion">
-    <p class="accordion-title">Detail</p>
     <div class="detail">
       <table width="90%">
         <tbody>
@@ -34,14 +24,6 @@
           <tr>
             <th>Architecture</th>
             <td colspan="2"><%= @containerDetail[:architecture] %></td>
-          </tr>
-          <tr>
-            <th>Limits CPU</th>
-            <td colspan="2"><%= @containerDetail[:expanded_config][:"limits.cpu"] %></td>
-          </tr>
-          <tr>
-            <th>Limits Memory</th>
-            <td colspan="2"><%= @containerDetail[:expanded_config][:"limits.memory"] %></td>
           </tr>
           <tr>
             <th rowspan="7">Image</th>
@@ -75,7 +57,6 @@
     </div>
 
     <% if @containerDetail[:status] == "Running" %>
-      <p class="accordion-title">Console</p>
       <div id="terminal-container"></div>
     <% end %>
 
@@ -83,145 +64,43 @@
 </div>
 
 <script>
-  var term,
-  protocol,
-  socketURL,
-  socket,
-  pid,
-  charWidth,
-  charHeight;
+var term,
+    protocol,
+    socketURL,
+    socket,
+    pid;
 
-  var terminalContainer = document.getElementById('terminal-container');
+var terminalContainer = document.getElementById('terminal-container');
 
-  function setTerminalSize () {
-  var cols = parseInt(colsElement.value, 10),
-    rows = parseInt(rowsElement.value, 10),
-    width = (cols * charWidth).toString() + 'px',
-    height = (rows * charHeight).toString() + 'px';
+createTerminal();
+console.log('<%= @websocket -%>');
+console.log('<%= @address -%>');
 
-  terminalContainer.style.width = width;
-  terminalContainer.style.height = height;
-  term.resize(cols, rows);
-  }
-
-  colsElement.addEventListener('change', setTerminalSize);
-  rowsElement.addEventListener('change', setTerminalSize);
-
-  actionElements.findNext.addEventListener('keypress', function (e) {
-  if (e.key === "Enter") {
-  e.preventDefault();
-  term.findNext(actionElements.findNext.value);
-  }
-  });
-  actionElements.findPrevious.addEventListener('keypress', function (e) {
-  if (e.key === "Enter") {
-  e.preventDefault();
-  term.findPrevious(actionElements.findPrevious.value);
-  }
-  });
-
-  optionElements.cursorBlink.addEventListener('change', function () {
-  term.setOption('cursorBlink', optionElements.cursorBlink.checked);
-  });
-  optionElements.cursorStyle.addEventListener('change', function () {
-  term.setOption('cursorStyle', optionElements.cursorStyle.value);
-  });
-  optionElements.scrollback.addEventListener('change', function () {
-  term.setOption('scrollback', parseInt(optionElements.scrollback.value, 10));
-  });
-  optionElements.tabstopwidth.addEventListener('change', function () {
-  term.setOption('tabStopWidth', parseInt(optionElements.tabstopwidth.value, 10));
-  });
-
-  createTerminal();
-
-  function createTerminal() {
-  // Clean terminal
+function createTerminal() {
+  
   while (terminalContainer.children.length) {
-  terminalContainer.removeChild(terminalContainer.children[0]);
+    terminalContainer.removeChild(terminalContainer.children[0]);
   }
-  term = new Terminal({
-  cursorBlink: optionElements.cursorBlink.checked,
-  scrollback: parseInt(optionElements.scrollback.value, 10),
-  tabStopWidth: parseInt(optionElements.tabstopwidth.value, 10)
-  });
-  term.on('resize', function (size) {
-  if (!pid) {
-    return;
-  }
-  var cols = size.cols,
-      rows = size.rows,
-      url = '/terminals/' + pid + '/size?cols=' + cols + '&rows=' + rows;
-
-  fetch(url, {method: 'POST'});
-  });
+  term = new Terminal();
   protocol = (location.protocol === 'https:') ? 'wss://' : 'ws://';
-  socketURL = protocol + location.hostname + ((location.port) ? (':' + location.port) : '') + '/terminals/';
-
+  socketURL = '<%= @websocket -%>';
+  
   term.open(terminalContainer);
   term.fit();
 
-  var initialGeometry = term.proposeGeometry(),
-    cols = initialGeometry.cols,
-    rows = initialGeometry.rows;
+  fetch('<%= @address -%>', {method: 'POST'}).then(function (res) {
+    res.text().then(function (pid) {
+      window.pid = pid;
+      socketURL += pid;
+      socket = new WebSocket(socketURL);
+      socket.onopen = runRealTerminal;
+    });
+});
+}
 
-  colsElement.value = cols;
-  rowsElement.value = rows;
-
-  fetch('/terminals?cols=' + cols + '&rows=' + rows, {method: 'POST'}).then(function (res) {
-
-  charWidth = Math.ceil(term.element.offsetWidth / cols);
-  charHeight = Math.ceil(term.element.offsetHeight / rows);
-
-  res.text().then(function (pid) {
-    window.pid = pid;
-    socketURL += pid;
-    socket = new WebSocket(socketURL);
-    socket.onopen = runRealTerminal;
-    socket.onclose = runFakeTerminal;
-    socket.onerror = runFakeTerminal;
-  });
-  });
-  }
-
-  function runRealTerminal() {
+function runRealTerminal() {
   term.attach(socket);
   term._initialized = true;
-  }
-
-  function runFakeTerminal() {
-  if (term._initialized) {
-  return;
-  }
-
-  term._initialized = true;
-
-  var shellprompt = '$ ';
-
-  term.prompt = function () {
-  term.write('\r\n' + shellprompt);
-  };
-
-  term.on('key', function (key, ev) {
-  var printable = (
-    !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
-  );
-
-  if (ev.keyCode == 13) {
-    term.prompt();
-  } else if (ev.keyCode == 8) {
-  // Do not delete the prompt
-    if (term.x > 2) {
-      term.write('\b \b');
-    }
-  } else if (printable) {
-    term.write(key);
-  }
-  });
-
-  term.on('paste', function (data, ev) {
-  term.write(data);
-  });
-  }
+}
 
 </script>

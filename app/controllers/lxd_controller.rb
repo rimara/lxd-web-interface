@@ -41,8 +41,11 @@ class LxdController < ApplicationController
     def detail
         containerName = params[:name].to_s
         @containerDetail = Hyperkit.container(containerName).to_hash
-        @cert = File.read(Rails.root + 'client.crt')
-        @key = File.read(Rails.root + 'client.key')
+        current_ip = IpAddress.find_by(currently_used: 1).ip
+        current_ip = current_ip[8..-1]
+        current_ip.chomp!(":8443")
+        @address = "http://" + current_ip + ":8081/terminals/"
+        @websocket = "ws://" + current_ip + ":8081/terminals/"
     end
 
     def restart
