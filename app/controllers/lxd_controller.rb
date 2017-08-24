@@ -94,28 +94,20 @@ class LxdController < ApplicationController
                 "limits.memory" => params[:new_limits_memory],
                 "limits.memory.swap" => params[:new_limits_memory_swap]
             })
-
         redirect_to lxd_index_path
     end
 
     def update
         containerName = params[:name].to_s
         @containerDetail = Hyperkit.container(containerName).to_hash
-        #newConfiguration = Hash.new
-        #newConfiguration = currentConfig[:expanded_config].to_hash
-
-        #newConfiguration[:"limits.cpu"] = params[:new_limits_cpu]
-        #newConfiguration[:"limits.memory"] = params[:new_limits_memory] + 'MB'
-
         puts "Before"
         puts @containerDetail[:expanded_config][:"limits.cpu"]
-        #puts @containerDetail[:expanded_config][:"limits.memory"]
         @containerDetail[:expanded_config][:"limits.cpu"] = params[:new_limits_cpu]
         @containerDetail[:expanded_config][:"limits.memory"] = params[:new_limits_memory]
 
         #currentConfig[:expanded_config] = newConfiguration
         puts @containerDetail[:expanded_config][:"limits.cpu"]
-        Hyperkit.update_container(containerName, @containerDetail, sync: true)
+        puts Hyperkit.update_container(containerName, @containerDetail, sync: true)
         puts Hyperkit.container(containerName)[:expanded_config][:"limits.cpu"]
 
         redirect_to lxd_index_path
@@ -124,8 +116,6 @@ class LxdController < ApplicationController
     def edit
         containerName = params[:name].to_s
         @containerDetail = Hyperkit.container(containerName).to_hash
-
-
     end
 
 end
