@@ -18,6 +18,12 @@
                 <%= text_field_tag(:new_limits_cpu, @containerDetail[:expanded_config][:"limits.cpu"], class: "u-full-width") %>
                 <%= label_tag("Limit Memory") %>
                 <%= text_field_tag(:new_limits_memory, @containerDetail[:expanded_config][:"limits.memory"], class: "u-full-width", min: 100, max: 1000) %>
+                <%= label_tag("nictype") %>
+                <%= text_field_tag(:new_nictype, @containerDetail[:expanded_devices][:eth0][:nictype], class: "u-full-width", min: 100, max: 1000) %>
+                <%= label_tag("parent") %>
+                <%= text_field_tag(:new_parent, @containerDetail[:expanded_devices][:eth0][:parent], class: "u-full-width", min: 100, max: 1000) %>
+                <%= label_tag("type") %>
+                <%= text_field_tag(:new_type, @containerDetail[:expanded_devices][:eth0][:type], class: "u-full-width", min: 100, max: 1000) %>
 
                 <%= submit_tag("update", :class => "button-primary") %>
             <% end %>

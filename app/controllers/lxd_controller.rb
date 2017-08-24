@@ -107,7 +107,7 @@ class LxdController < ApplicationController
         puts @containerDetail[:expanded_config][:"limits.cpu"]
         @containerDetail[:expanded_config][:"limits.cpu"] = params[:new_limits_cpu]
         @containerDetail[:expanded_config][:"limits.memory"] = params[:new_limits_memory]
-
+        @containerDetail.devices.eth1 = {nictype: params[:new_nictype], parent: params[:new_parent], type: params[:new_type]}
         #currentConfig[:expanded_config] = newConfiguration
         puts @containerDetail[:expanded_config][:"limits.cpu"]
         puts Hyperkit.update_container(containerName, @containerDetail, sync: true)

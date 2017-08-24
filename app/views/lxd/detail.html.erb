@@ -9,6 +9,7 @@
 
 <div class="container u-max-full-width">
   <h5 class="current-page main-header">Container Info</h5>
+  <%= link_to "Edit Container", lxd_edit_path(), :class => "button u-pull-right"%>
   <div id="accordion">
     <div class="detail">
       <table width="90%">
@@ -77,14 +78,14 @@ console.log('<%= @websocket -%>');
 console.log('<%= @address -%>');
 
 function createTerminal() {
-  
+
   while (terminalContainer.children.length) {
     terminalContainer.removeChild(terminalContainer.children[0]);
   }
   term = new Terminal();
   protocol = (location.protocol === 'https:') ? 'wss://' : 'ws://';
   socketURL = '<%= @websocket -%>';
-  
+
   term.open(terminalContainer);
   term.fit();
 
