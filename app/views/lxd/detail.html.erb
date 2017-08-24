@@ -10,7 +10,6 @@
 <div class="container u-max-full-width">
   <h5 class="current-page main-header">Container Info</h5>
   <div id="accordion">
-    <p class="accordion-title">Detail</p>
     <div class="detail">
       <table width="90%">
         <tbody>
@@ -58,7 +57,6 @@
     </div>
 
     <% if @containerDetail[:status] == "Running" %>
-      <p class="accordion-title">Console</p>
       <div id="terminal-container"></div>
     <% end %>
 
@@ -75,6 +73,8 @@ var term,
 var terminalContainer = document.getElementById('terminal-container');
 
 createTerminal();
+console.log('<%= @websocket -%>');
+console.log('<%= @address -%>');
 
 function createTerminal() {
   
@@ -83,11 +83,12 @@ function createTerminal() {
   }
   term = new Terminal();
   protocol = (location.protocol === 'https:') ? 'wss://' : 'ws://';
-  socketURL = 'ws://localhost:8081/terminals/';
-
+  socketURL = '<%= @websocket -%>';
+  
   term.open(terminalContainer);
+  term.fit();
 
-  fetch('http://localhost:8081/terminals', {method: 'POST'}).then(function (res) {
+  fetch('<%= @address -%>', {method: 'POST'}).then(function (res) {
     res.text().then(function (pid) {
       window.pid = pid;
       socketURL += pid;
